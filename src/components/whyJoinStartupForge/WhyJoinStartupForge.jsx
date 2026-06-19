@@ -24,10 +24,10 @@ const whyJoinData = [
   },
 ];
 
-
 export default function WhyJoinStartupForge () {
   return (
     <div className="bg-linear-to-l from-orange-200 via-orange-100 to-orange-50">
+      <h1 className="text-xl font-bold text-center">Why Join StartupForge</h1>
       {/* Wrapper */}
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 p-4">
         {/* Main container */}
