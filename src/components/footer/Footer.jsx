@@ -8,7 +8,7 @@ export default function Footer () {
   return (
     <div className="border bg-black text-white">
       {/* Wrapper */}
-      <div className="mx-auto flex flex-col gap-8 px-4 lg:px-25 xl:px-50 py-8">
+      <div className="container mx-auto flex flex-col gap-8 px-4 lg:px-25 xl:px-50 py-8">
         {/* Main container */}
         <div className="flex items-center justify-center">
           {/* Logo container*/}
