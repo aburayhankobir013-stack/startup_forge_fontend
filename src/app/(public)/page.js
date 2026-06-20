@@ -13,7 +13,6 @@ export default function HomePage() {
       <WhyJoinStartupForge />
       <StartupSttistics />
       <CTACard />
-      <Footer />
     </>
   );
 }
