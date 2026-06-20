@@ -12,6 +12,7 @@ import { RxEyeOpen } from "react-icons/rx";
 import { VscEyeClosed } from "react-icons/vsc";
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function SignupForm() {
   const [isOpen, setIsOpen] = useState(true);
@@ -104,8 +105,8 @@ export default function SignupForm() {
       {/* Wrapper */}
       <div className="container mx-auto flex flex-col items-center gap-3 p-2">
         {/* Main container */}
-        <h1 className="text-center text-2xl font-bold">Sign Up Form</h1>
-        <div className="flex flex-col lg:flex-row w-full xs:max-w-sm md:max-w-md lg:max-w-4xl p-2 bg-orange-300 rounded-sm shadow-sm shadow-orange-300">
+        <h1 className="text-center text-2xl font-bold">Welcome To Sign Up Form</h1>
+        <div className="flex flex-col lg:flex-row w-full xs:max-w-sm md:max-w-md lg:max-w-4xl gap-3 p-2 bg-orange-300 rounded-sm shadow-sm shadow-orange-300">
           {/* Form container */}
           <div className="flex-1 flex flex-col justify-center items-center text-center gap-3">
             {/* Left container */}
@@ -362,13 +363,15 @@ export default function SignupForm() {
                 <FcGoogle />
                 <span>Sign up with google</span>
               </Button>
-              <Button
-                variant="outline"
-                className="w-full rounded-sm bg-zinc-100 font-bold text-black border-none shadow-sm hover:shadow-orange-400"
-              >
-                <span>Go to sign in page</span>
-                <HiArrowLongRight />
-              </Button>
+              <Link href={"/signin"}>
+                <Button
+                  variant="outline"
+                  className="w-full rounded-sm bg-zinc-100 font-bold text-black border-none shadow-sm hover:shadow-orange-400"
+                >
+                  <span>Go to sign in page</span>
+                  <HiArrowLongRight />
+                </Button>
+              </Link>
             </div>
           </form>
         </div>
