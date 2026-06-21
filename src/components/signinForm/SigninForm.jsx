@@ -1,5 +1,5 @@
 "use client";
-import { Button, toast } from "@heroui/react";
+import { Button, Spinner, toast } from "@heroui/react";
 import { useForm } from "react-hook-form";
 import { FcGoogle } from "react-icons/fc";
 import { HiArrowLongRight } from "react-icons/hi2";
@@ -9,13 +9,19 @@ import { RxEyeOpen } from "react-icons/rx";
 import { VscEyeClosed } from "react-icons/vsc";
 import Link from "next/link";
 import { useState } from "react";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function SigninForm() {
   const [isOpen, setIsOpen] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("Sign In");
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
   const password = watch("password", "");
@@ -39,14 +45,47 @@ export default function SigninForm() {
     },
   };
   const handleOnSubmit = async (formData) => {
-    console.log(formData);
+    await authClient.signIn.email(
+      {
+        email: formData.email,
+        password: formData.password,
+        rememberMe: false,
+      },
+      {
+        onRequest: (ctx) => {
+          setIsLoading(true);
+          setMessage("Sign In...");
+        },
+        onSuccess: (ctx) => {
+          toast.success("User successfully signin!");
+          setIsLoading(false);
+          setMessage("Sign In");
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
+        },
+        onError: (ctx) => {
+          setIsLoading(false);
+          setMessage("Sign In");
+          toast.danger(ctx.error.message);
+        },
+      },
+    );
+    reset();
+  };
+  const handleGoogleSignin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
   };
   return (
     <div className="min-h-screen bg-linear-to-l from-orange-200 via-orange-100 to-orange-50">
       {/* Wrapper */}
       <div className="container mx-auto flex flex-col items-center gap-3 p-2">
         {/* Main container */}
-        <h1 className="text-center text-2xl font-bold">Welcome To Sign Up Form</h1>
+        <h1 className="text-center text-2xl font-bold">
+          Welcome To Sign Up Form
+        </h1>
         <div className="flex flex-col lg:flex-row w-full xs:max-w-sm md:max-w-md lg:max-w-4xl gap-3 p-2 bg-orange-300 rounded-sm shadow-sm shadow-orange-300">
           {/* Form container */}
           <div className="flex-1 flex flex-col justify-center items-center text-center gap-3">
@@ -152,16 +191,25 @@ export default function SigninForm() {
             <div className="flex flex-col gap-1">
               <Button
                 variant="outline"
-                className="w-full rounded-sm bg-orange-500 font-bold text-white border-none shadow-sm hover:shadow-orange-400"
+                onClick={() => reset()}
+                disabled={isLoading}
+                className={`w-full rounded-sm font-bold text-white border-none shadow-sm hover:shadow-orange-400 ${isLoading ? `bg-black` : `bg-orange-500`}`}
               >
                 Reset
               </Button>
               <Button
                 variant="outline"
                 type="submit"
-                className="w-full rounded-sm bg-orange-500 font-bold text-white border-none shadow-sm hover:shadow-orange-400"
+                className={`w-full rounded-sm font-bold text-white border-none shadow-sm hover:shadow-orange-400 ${isLoading ? `bg-black` : `bg-orange-500`}`}
               >
-                Sign Up
+                {isLoading ? (
+                  <>
+                    <Spinner color="current" />
+                    {message}
+                  </>
+                ) : (
+                  message
+                )}
               </Button>
             </div>
             <p className="text-center">
@@ -170,6 +218,7 @@ export default function SigninForm() {
             <div className="flex flex-col gap-1">
               <Button
                 variant="outline"
+                onClick={handleGoogleSignin}
                 className="w-full rounded-sm bg-orange-500 font-bold text-white border-none shadow-sm hover:shadow-orange-400"
               >
                 <FcGoogle />
@@ -177,12 +226,12 @@ export default function SigninForm() {
               </Button>
               <Link href={"/signup"}>
                 <Button
-                variant="outline"
-                className="w-full rounded-sm bg-zinc-100 font-bold text-black border-none shadow-sm hover:shadow-orange-400"
-              >
-                <span>Go to sign up page</span>
-                <HiArrowLongRight />
-              </Button>
+                  variant="outline"
+                  className="w-full rounded-sm bg-zinc-100 font-bold text-black border-none shadow-sm hover:shadow-orange-400"
+                >
+                  <span>Go to sign up page</span>
+                  <HiArrowLongRight />
+                </Button>
               </Link>
             </div>
           </form>

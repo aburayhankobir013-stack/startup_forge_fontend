@@ -1,7 +1,7 @@
 "use client";
-import { Button, toast } from "@heroui/react";
+import { Button, Spinner, toast } from "@heroui/react";
 import { Label, ListBox, Select } from "@heroui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { FaUser } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
@@ -13,6 +13,8 @@ import { VscEyeClosed } from "react-icons/vsc";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [isOpen, setIsOpen] = useState(true);
@@ -20,12 +22,16 @@ export default function SignupForm() {
   const [imageUrl, setImageUrl] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [message, setMessage] = useState("Sign Up");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     watch,
     control,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -98,14 +104,50 @@ export default function SignupForm() {
       toast.danger("Please upload am image first!");
     } else {
       console.log(formData);
+      await authClient.signUp.email(
+        {
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+          image: imageUrl,
+          plan: "free",
+        },
+        {
+          onRequest: (ctx) => {
+            setIsSubmitting(true);
+            setMessage("Singed Up...");
+          },
+          onSuccess: (ctx) => {
+            toast.success("User successfully signed up!");
+            setIsSubmitting(false);
+            setMessage("Sign Up");
+            setTimeout(() => {
+              router.push("/");
+            }, 2000);
+          },
+          onError: (ctx) => {
+            toast.danger(ctx.error.message);
+            setIsSubmitting(false);
+            setMessage("Sign Up");
+          },
+        },
+      );
     }
+    reset();
+  };
+  const handleGoogleSignup = async () => {
+      await authClient.signIn.social({
+      provider: "google",
+    });
   };
   return (
     <div className="min-h-screen bg-linear-to-l from-orange-200 via-orange-100 to-orange-50">
       {/* Wrapper */}
       <div className="container mx-auto flex flex-col items-center gap-3 p-2">
         {/* Main container */}
-        <h1 className="text-center text-2xl font-bold">Welcome To Sign Up Form</h1>
+        <h1 className="text-center text-2xl font-bold">
+          Welcome To Sign Up Form
+        </h1>
         <div className="flex flex-col lg:flex-row w-full xs:max-w-sm md:max-w-md lg:max-w-4xl gap-3 p-2 bg-orange-300 rounded-sm shadow-sm shadow-orange-300">
           {/* Form container */}
           <div className="flex-1 flex flex-col justify-center items-center text-center gap-3">
@@ -206,7 +248,7 @@ export default function SignupForm() {
                     variant="outline"
                     onClick={handleImageUpload}
                     disabled={isUploading}
-                    className="relative w-full overflow-hidden rounded-sm border-none font-bold text-white shadow-sm hover:shadow-orange-400"
+                    className={`relative w-full overflow-hidden rounded-sm border-none font-bold text-white shadow-sm hover:shadow-orange-400 ${isUploading && `bg-black`}`}
                   >
                     {isUploading && (
                       <span
@@ -340,16 +382,26 @@ export default function SignupForm() {
             <div className="flex flex-col gap-1">
               <Button
                 variant="outline"
-                className="w-full rounded-sm bg-orange-500 font-bold text-white border-none shadow-sm hover:shadow-orange-400"
+                onClick={() => reset()}
+                disabled={isUploading || isSubmitting}
+                className={`w-full rounded-sm font-bold text-white border-none shadow-sm hover:shadow-orange-400 ${isUploading || isSubmitting ? `bg-black` : `bg-orange-500`}`}
               >
                 Reset
               </Button>
               <Button
                 variant="outline"
+                disabled={isUploading || isSubmitting}
                 type="submit"
-                className="w-full rounded-sm bg-orange-500 font-bold text-white border-none shadow-sm hover:shadow-orange-400"
+                className={`w-full rounded-sm font-bold text-white border-none shadow-sm hover:shadow-orange-400 ${isUploading || isSubmitting ? `bg-black` : `bg-orange-500`}`}
               >
-                Sign Up
+                {isSubmitting ? (
+                  <>
+                    <Spinner color="current" />
+                    {message}
+                  </>
+                ) : (
+                  message
+                )}
               </Button>
             </div>
             <p className="text-center">
@@ -357,6 +409,7 @@ export default function SignupForm() {
             </p>
             <div className="flex flex-col gap-1">
               <Button
+                onClick={handleGoogleSignup}
                 variant="outline"
                 className="w-full rounded-sm bg-orange-500 font-bold text-white border-none shadow-sm hover:shadow-orange-400"
               >
