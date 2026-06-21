@@ -50,7 +50,8 @@ export default function Navbar() {
               <Avatar.Fallback>{session?.user?.name.charAt(0)}</Avatar.Fallback>
             </Avatar>
           ) : (
-            <Link href={"/signin"}>
+             <div className="flex items-center gap-2">
+              <Link href={"/signin"}>
               <Button
                 variant="outline"
                 className="rounded-sm bg-orange-500 font-bold text-white shadow-sm hover:shadow-orange-500 border-none"
@@ -58,6 +59,10 @@ export default function Navbar() {
                 Sign In
               </Button>
             </Link>
+            <Link href={"/signup"}>
+              <Button variant="outline" className="rounded-sm bg-orange-500 font-bold text-white shadow-sm hover:shadow-orange-500 border-none">Sign Up</Button>
+            </Link>
+            </div>
           )}
         </div>
         {isOpenDropdown && session?.user && (
@@ -122,7 +127,8 @@ export default function Navbar() {
               <Avatar.Fallback>{session?.user?.name.charAt(0)}</Avatar.Fallback>
             </Avatar>
           ) : (
-            <Link href={"/signin"}>
+            <div className="flex items-center gap-2">
+              <Link href={"/signin"}>
               <Button
                 variant="outline"
                 className="rounded-sm bg-orange-500 font-bold text-white shadow-sm hover:shadow-orange-500 border-none"
@@ -130,6 +136,10 @@ export default function Navbar() {
                 Sign In
               </Button>
             </Link>
+            <Link href={"/signup"}>
+              <Button variant="outline" className="rounded-sm bg-orange-500 font-bold text-white shadow-sm hover:shadow-orange-500 border-none">Sign Up</Button>
+            </Link>
+            </div>
           )}
         </div>
         {isOpenDropdown && session?.user && (
