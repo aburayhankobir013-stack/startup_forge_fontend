@@ -68,12 +68,12 @@ export default function Footer () {
                 </Link>
               </li>
               <li className="hover:border-b w-fit">
-                <Link href={"#"}>
+                <Link href={"/signin"}>
                   Sign In
                 </Link>
               </li>
               <li className="hover:border-b w-fit">
-                <Link href={"#"}>
+                <Link href={"signup"}>
                   Sign Up
                 </Link>
               </li>

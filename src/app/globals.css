@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "@heroui/styles";
-
 @theme {
   --breakpoint-xs: 480px;
 }

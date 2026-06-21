@@ -27,12 +27,12 @@ export default function Banner () {
           </div>
           <div className="flex items-center gap-2">
             {/* CTA buttons */}
-            <Link href = {"#"}>
+            <Link href = {"/signup"}>
               <Button variant = "outline" className = "border-2 border-orange-500 rounded-sm font-bold text-white bg-orange-500 hover:bg-orange-600 shadow-xs shadow-orange-300">
                 Sign Up
               </Button>
             </Link>
-            <Link href = {"#"}>
+            <Link href = {"/signin"}>
               <Button variant = "outline" className = "rounded-sm border-2 border-orange-500 hover:bg-orange-600 text-orange-500 font-bold shadow-xs shadow-orange-300 hover:text-white">
                 Sign In
               </Button>

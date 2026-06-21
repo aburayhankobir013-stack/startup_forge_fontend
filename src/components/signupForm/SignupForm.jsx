@@ -103,7 +103,6 @@ export default function SignupForm() {
     if (!imageUrl) {
       toast.danger("Please upload am image first!");
     } else {
-      console.log(formData);
       await authClient.signUp.email(
         {
           email: formData.email,
