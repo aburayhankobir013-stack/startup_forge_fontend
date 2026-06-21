@@ -108,7 +108,7 @@ export default function Navbar() {
             />
           )}
         </div>
-        <div>
+        <div className="hidden xs:block">
           {/* Logo container */}
           <h1 className="text-xl font-bold">
             <span className="text-indigo-500">

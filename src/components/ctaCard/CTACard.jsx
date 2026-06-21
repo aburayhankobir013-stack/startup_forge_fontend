@@ -3,7 +3,7 @@ import Link from "next/link";
 import { RiArrowRightLongLine } from "react-icons/ri";
 export default function CTACard () {
   return (
-    <div className="bg-linear-to-l from-orange-200 via-orange-100 to-orange-50 p-4">
+    <div className="bg-linear-to-l from-orange-200 via-orange-100 to-orange-50 pb-4 md:p-4">
       {/* Wrapper */}
       <div className="container mx-auto px-4">
         <div className="container mx-auto flex flex-col items-center text-center gap-2 bg-orange-300 rounded-sm px-4 py-8">
