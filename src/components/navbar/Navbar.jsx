@@ -12,7 +12,7 @@ export default function Navbar() {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const router = useRouter();
   const { data: session, isLoading } = useSession();
-
+  const role = session?.user?.role;
   const handleSignout = async () => {
     await authClient.signOut({
       fetchOptions: {
@@ -39,6 +39,7 @@ export default function Navbar() {
           <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"startups"}>Browse startups</NavLink>
           <NavLink href={"/opportunities"}>Browse opportunities</NavLink>
+          <NavLink href={"/pricing"}>Pricing</NavLink>
         </div>
         <div>
           {session?.user ? (
@@ -73,7 +74,7 @@ export default function Navbar() {
               <span className="text-xl">{session?.user?.name}</span>
             </h1>
             <p className="italic">{session?.user?.email}</p>
-            <Link href={"#"} className="font-semibold hover:border-b-2">
+            <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
             <Link href={"#"} className="font-semibold hover:border-b-2">
@@ -150,7 +151,7 @@ export default function Navbar() {
               <span className="text-xl">{session?.user?.name}</span>
             </h1>
             <p className="italic">{session?.user?.email}</p>
-            <Link href={"#"} className="font-semibold hover:border-b-2">
+            <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
             <Link href={"#"} className="font-semibold hover:border-b-2">
@@ -171,6 +172,7 @@ export default function Navbar() {
           <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"/startups"}>Browse startups</NavLink>
           <NavLink href={"/opportunities"}>Browse opportunities</NavLink>
+          <NavLink href={"/pricing"}>Pricing</NavLink>
         </div>
       )}
     </div>
