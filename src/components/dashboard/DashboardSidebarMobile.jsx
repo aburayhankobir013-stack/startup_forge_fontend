@@ -120,8 +120,8 @@ export default function DashboardSidebarMobile() {
             <Avatar.Fallback>{session?.user?.name.charAt(0)}</Avatar.Fallback>
           </Avatar>
           {isOpenDropdown || (
-            <div className="max-w-100 w-full rounded-sm p-1 gap-1 bg-orange-200 shadow-sm shadow-orange-300 absolute left-1/6 bottom-full text-center z-10">
-              <div className="bg-gray-100 rounded-sm flex flex-col gap-2 items-center p-2">
+            <div className="w-fit rounded-sm p-1 bg-orange-200 shadow-sm shadow-orange-300 absolute left-1/6 bottom-full text-center z-10">
+              <div className="bg-gray-100 rounded-sm flex flex-col gap-2 items-center py-2 px-10">
                 <h1 className="font-semibold">
                   <span>Welcome</span>
                   <br />

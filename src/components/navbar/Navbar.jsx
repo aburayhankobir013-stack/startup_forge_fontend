@@ -67,13 +67,15 @@ export default function Navbar() {
           )}
         </div>
         {isOpenDropdown && session?.user && (
-          <div className="max-w-100 w-full rounded-bl-sm rounded-br-sm p-2 flex flex-col items-center gap-1 bg-orange-200 shadow-sm shadow-orange-300 absolute right-0 top-full text-center z-10">
+          <div className="max-w-100 w-full rounded-bl-sm rounded-br-sm p-1
+           bg-orange-200 shadow-sm shadow-orange-300 absolute right-0 top-full text-center z-10">
+            <div className="bg-gray-100 rounded-sm flex flex-col items-center gap-2 p-2">
             <h1 className="font-semibold">
               <span>Welcome</span>
               <br />
               <span className="text-xl">{session?.user?.name}</span>
             </h1>
-            <p className="italic">{session?.user?.email}</p>
+            <p className="italic text-xs">{session?.user?.email}</p>
             <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
@@ -87,6 +89,7 @@ export default function Navbar() {
             >
               Signout
             </Button>
+          </div>
           </div>
         )}
       </div>
@@ -144,13 +147,15 @@ export default function Navbar() {
           )}
         </div>
         {isOpenDropdown && session?.user && (
-          <div className="max-w-100 w-full rounded-bl-sm rounded-br-sm p-2 flex flex-col items-center gap-1 bg-orange-200 shadow-sm shadow-orange-300 absolute right-0 top-full text-center z-10">
+          <div className="max-w-100 w-full rounded-bl-sm rounded-br-sm p-1
+           bg-orange-200 shadow-sm shadow-orange-300 absolute right-0 top-full text-center z-10">
+            <div className="bg-gray-100 rounded-sm flex flex-col items-center gap-2 p-2">
             <h1 className="font-semibold">
               <span>Welcome</span>
               <br />
               <span className="text-xl">{session?.user?.name}</span>
             </h1>
-            <p className="italic">{session?.user?.email}</p>
+            <p className="italic text-xs">{session?.user?.email}</p>
             <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
@@ -165,14 +170,17 @@ export default function Navbar() {
               Signout
             </Button>
           </div>
+          </div>
         )}
       </div>
       {isOpen && (
-        <div className="container mx-auto flex flex-col items-center gap-1 px-3 py-2 bg-orange-200 md:hidden">
-          <NavLink href={"/"}>Home</NavLink>
+        <div className="container mx-auto bg-orange-200 rounded-bl-sm rounded-br-sm p-1 md:hidden">
+          <div className="flex flex-col items-center gap-1 p-2 rounded-sm bg-gray-100">
+            <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"/startups"}>Browse startups</NavLink>
           <NavLink href={"/opportunities"}>Browse opportunities</NavLink>
           <NavLink href={"/pricing"}>Pricing</NavLink>
+          </div>
         </div>
       )}
     </div>
