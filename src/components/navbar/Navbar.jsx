@@ -39,7 +39,16 @@ export default function Navbar() {
           <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"startups"}>Browse startups</NavLink>
           <NavLink href={"/opportunities"}>Browse opportunities</NavLink>
-          <NavLink href={"/pricing"}>Pricing</NavLink>
+          {
+            !session?.user
+            &&
+            <NavLink href={"/pricing"}>Pricing</NavLink>
+          }
+          {
+            role === "founder"
+            &&
+            <NavLink href={"/pricing"}>Pricing</NavLink>
+          }
         </div>
         <div>
           {session?.user ? (
@@ -179,7 +188,16 @@ export default function Navbar() {
             <NavLink href={"/"}>Home</NavLink>
           <NavLink href={"/startups"}>Browse startups</NavLink>
           <NavLink href={"/opportunities"}>Browse opportunities</NavLink>
-          <NavLink href={"/pricing"}>Pricing</NavLink>
+          {
+            !session?.user
+            &&
+            <NavLink href={"/pricing"}>Pricing</NavLink>
+          }
+          {
+            role === "founder"
+            &&
+            <NavLink href={"/pricing"}>Pricing</NavLink>
+          }
           </div>
         </div>
       )}
