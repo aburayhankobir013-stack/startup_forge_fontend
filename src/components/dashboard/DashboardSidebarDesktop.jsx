@@ -6,15 +6,13 @@ import { FaExchangeAlt } from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa";
 import { FaFileAlt } from "react-icons/fa";
 import { FaUser } from "react-icons/fa";
-import { useSession } from "@/lib/auth-client";
-import { Avatar, Button } from "@heroui/react";
+import { authClient, useSession } from "@/lib/auth-client";
+import { Avatar, Button, toast } from "@heroui/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-
-
-export default function DashboardSidebarDesktop () {
+export default function DashboardSidebarDesktop() {
   const [isOpenDropdown, setIsOpenDropdown] = useState(false);
   const { data: session, isLoading } = useSession();
   const router = useRouter();
@@ -34,66 +32,66 @@ export default function DashboardSidebarDesktop () {
       {
         icon: GrOverview,
         label: "Overview",
-        href: "dashboard/admin/overview",
+        href: "/dashboard/admin/overview",
       },
       {
         icon: MdManageAccounts,
         label: "Manage Users",
-        href: "dashboard/admin/manage_users",
+        href: "/dashboard/admin/manage_users",
       },
       {
         icon: FaRocket,
         label: "Manage Startups",
-        href: "dashboard/admin/manage_startups",
+        href: "/dashboard/admin/manage_startups",
       },
       {
         icon: FaExchangeAlt,
         label: "Transactions",
-        href: "dashboard/admin/transactions",
+        href: "/dashboard/admin/transactions",
       },
     ],
     founder: [
       {
         icon: GrOverview,
         label: "Overview",
-        href: "dashboard/founder/overview",
+        href: "/dashboard/founder/overview",
       },
       {
         icon: FaRocket,
         label: "My Startup",
-        href: "dashboard/founder/my_startup",
+        href: "/dashboard/founder/my_startup",
       },
       {
         icon: FaBriefcase,
         label: "Add Opportunity",
-        href: "dashboard/founder/add_opportunity",
+        href: "/dashboard/founder/add_opportunity",
       },
       {
         icon: FaBriefcase,
         label: "Manage Opportunities",
-        href: "dashboard/founder/manage_opportunities",
+        href: "/dashboard/founder/manage_opportunities",
       },
       {
         icon: FaFileAlt,
         label: "Applications",
-        href: "dashboard/founder/applications",
+        href: "/dashboard/founder/applications",
       },
     ],
     collaborator: [
       {
         icon: GrOverview,
         label: "Overview",
-        href: "dashboard/collaborator/overview",
+        href: "/dashboard/collaborator/overview",
       },
       {
         icon: FaBriefcase,
         label: "My Application",
-        href: "dashboard/collaborator/my_application",
+        href: "/dashboard/collaborator/my_application",
       },
     ],
   };
   return (
-    <div className="bg-orange-300 max-w-60 w-full h-full absolute p-4 hidden flex-col justify-between md:flex">
+    <div className="bg-orange-300 max-w-60 w-full h-full p-4 hidden flex-col justify-between md:flex">
       <div className="flex flex-col gap-2">
         <h1 className="font-bold text-xl text-center">
           <span className="text-indigo-500">STARTUP</span>
@@ -123,27 +121,27 @@ export default function DashboardSidebarDesktop () {
             <Avatar.Fallback>{session?.user?.name.charAt(0)}</Avatar.Fallback>
           </Avatar>
           {isOpenDropdown || (
-        <div className="w-fit rounded-sm p-1 bg-orange-200 shadow-sm shadow-orange-300 absolute left-1/6 bottom-full text-center z-10">
-          <div className="bg-gray-100 rounded-sm flex flex-col gap-2 items-center py-2 px-20">
-          <h1 className="font-semibold">
-            <span>Welcome</span>
-            <br />
-            <span className="text-xl">{session?.user?.name}</span>
-          </h1>
-          <p className="italic text-xs">{session?.user?.email}</p>
-          <Link href={"#"} className="font-semibold hover:border-b-2">
-            Profile
-          </Link>
-          <Button
-            variant="outline"
-            onClick={handleSignout}
-            className="rounded-sm border-none bg-orange-500 shadow-sm shadow-orange-500 text-white font-bold hover:bg-orange-600"
-          >
-            Signout
-          </Button>
-        </div>
-        </div>
-      )}
+            <div className="w-fit rounded-sm p-1 bg-orange-200 shadow-sm shadow-orange-300 absolute left-1/6 bottom-full text-center z-10">
+              <div className="bg-gray-100 rounded-sm flex flex-col gap-2 items-center py-2 px-20">
+                <h1 className="font-semibold">
+                  <span>Welcome</span>
+                  <br />
+                  <span className="text-xl">{session?.user?.name}</span>
+                </h1>
+                <p className="italic text-xs">{session?.user?.email}</p>
+                <Link href={"#"} className="font-semibold hover:border-b-2">
+                  Profile
+                </Link>
+                <Button
+                  variant="outline"
+                  onClick={handleSignout}
+                  className="rounded-sm border-none bg-orange-500 shadow-sm shadow-orange-500 text-white font-bold hover:bg-orange-600"
+                >
+                  Signout
+                </Button>
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <Button
@@ -154,7 +152,6 @@ export default function DashboardSidebarDesktop () {
           </Button>
         </div>
       </div>
-      
     </div>
   );
 }

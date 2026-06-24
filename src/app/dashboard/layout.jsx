@@ -36,7 +36,9 @@ export default function DashboardLayout({ children }) {
       <div className="h-full relative md:flex bg-linear-to-l from-orange-200 via-orange-100 to-orange-50">
         {isOpen && <DashboardSidebarMobile />}
         <DashboardSidebarDesktop />
-        {children}
+        <div className="flex-1 h-full">
+          {children}
+        </div>
       </div>
     </div>
   );

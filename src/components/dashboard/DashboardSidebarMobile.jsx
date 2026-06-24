@@ -31,12 +31,12 @@ export default function DashboardSidebarMobile() {
       {
         icon: GrOverview,
         label: "Overview",
-        href: "dashboard/admin/overview",
+        href: "/dashboard/admin/overview",
       },
       {
         icon: MdManageAccounts,
         label: "Manage Users",
-        href: "dashboard/admin/manage_users",
+        href: "/dashboard/admin/manage_users",
       },
       {
         icon: FaRocket,
@@ -46,46 +46,46 @@ export default function DashboardSidebarMobile() {
       {
         icon: FaExchangeAlt,
         label: "Transactions",
-        href: "dashboard/admin/transactions",
+        href: "/dashboard/admin/transactions",
       },
     ],
     founder: [
       {
         icon: GrOverview,
         label: "Overview",
-        href: "dashboard/founder/overview",
+        href: "/dashboard/founder/overview",
       },
       {
         icon: FaRocket,
         label: "My Startup",
-        href: "dashboard/founder/my_startup",
+        href: "/dashboard/founder/my_startup",
       },
       {
         icon: FaBriefcase,
         label: "Add Opportunity",
-        href: "dashboard/founder/add_opportunity",
+        href: "/dashboard/founder/add_opportunity",
       },
       {
         icon: FaBriefcase,
         label: "Manage Opportunities",
-        href: "dashboard/founder/manage_opportunities",
+        href: "/dashboard/founder/manage_opportunities",
       },
       {
         icon: FaFileAlt,
         label: "Applications",
-        href: "dashboard/founder/applications",
+        href: "/dashboard/founder/applications",
       },
     ],
     collaborator: [
       {
         icon: GrOverview,
         label: "Overview",
-        href: "dashboard/collaborator/overview",
+        href: "/dashboard/collaborator/overview",
       },
       {
         icon: FaBriefcase,
         label: "My Application",
-        href: "dashboard/collaborator/my_application",
+        href: "/dashboard/collaborator/my_application",
       },
     ],
   };
