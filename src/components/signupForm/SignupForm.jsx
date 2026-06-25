@@ -109,7 +109,7 @@ export default function SignupForm() {
           password: formData.password,
           name: formData.name,
           image: imageUrl,
-          plan: "free",
+          role: formData.role
         },
         {
           onRequest: (ctx) => {
@@ -131,6 +131,7 @@ export default function SignupForm() {
           },
         },
       );
+      console.log(formData);
     }
     reset();
   };

@@ -1,5 +1,8 @@
+"use client";
+import { useSession } from "@/lib/auth-client";
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { BsLightningCharge } from "react-icons/bs";
 import { FaDollarSign } from "react-icons/fa";
 import { HiOutlineArrowRight } from "react-icons/hi2";
@@ -8,6 +11,15 @@ import { IoIosCheckmark } from "react-icons/io";
 
 
 export default function Pricing () {
+  const router = useRouter();
+  const { data: session, isLoading } = useSession();
+  const handleSubscription = async () => {
+    if (!session?.user) {
+      router.push("/signup");
+    } else {
+      console.log("Subscription!");
+    }
+  };
   return (
     <div className="h-screen relative md:flex bg-linear-to-l from-orange-200 via-orange-100 to-orange-50">
       {/* Wrapper */}
@@ -37,7 +49,7 @@ export default function Pricing () {
             <p className="text-gray-500">One-time payment, Lifetime access.</p>
           </div>
           <div>
-            <ul>
+            <ul className="flex flex-col gap-2">
               <li className="flex items-center gap-1">
                 <IoIosCheckmark size={20} className="text-green-500"/><span className="text-xs text-gray-600">Unlimited opportunity postings</span>
               </li>
@@ -58,7 +70,7 @@ export default function Pricing () {
               </li>
             </ul>
           </div>
-          <Button className="border-none rounded-sm text-xs w-full bg-orange-500 shadow-sm hover:shadow-orange-500 hover:bg-orange-700">
+          <Button onClick={handleSubscription} className="border-none rounded-sm text-xs w-full bg-orange-500 shadow-sm hover:shadow-orange-500 hover:bg-orange-700">
             <BsLightningCharge />
             <span>Upgrade To Premium</span>
           </Button>

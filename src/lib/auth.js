@@ -27,6 +27,9 @@ export const auth = betterAuth({
       plan: {
         defaultValue: "free",
       },
+      isBlocked: {
+        defaultValue: false,
+      }
     },
   },
 });

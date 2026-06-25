@@ -128,7 +128,7 @@ export default function DashboardSidebarMobile() {
                   <span className="text-xl">{session?.user?.name}</span>
                 </h1>
                 <p className="italic text-xs">{session?.user?.email}</p>
-                <Link href={"#"} className="font-semibold hover:border-b-2">
+                <Link href={"/profile"} className="font-semibold hover:border-b-2">
                   Profile
                 </Link>
                 <Button

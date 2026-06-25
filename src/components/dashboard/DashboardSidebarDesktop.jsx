@@ -5,7 +5,6 @@ import { FaRocket } from "react-icons/fa";
 import { FaExchangeAlt } from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa";
 import { FaFileAlt } from "react-icons/fa";
-import { FaUser } from "react-icons/fa";
 import { authClient, useSession } from "@/lib/auth-client";
 import { Avatar, Button, toast } from "@heroui/react";
 import Link from "next/link";
@@ -129,7 +128,7 @@ export default function DashboardSidebarDesktop() {
                   <span className="text-xl">{session?.user?.name}</span>
                 </h1>
                 <p className="italic text-xs">{session?.user?.email}</p>
-                <Link href={"#"} className="font-semibold hover:border-b-2">
+                <Link href={"/profile"} className="font-semibold hover:border-b-2">
                   Profile
                 </Link>
                 <Button

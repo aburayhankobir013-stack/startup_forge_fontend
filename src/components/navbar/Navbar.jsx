@@ -88,7 +88,7 @@ export default function Navbar() {
             <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
-            <Link href={"#"} className="font-semibold hover:border-b-2">
+            <Link href={"/profile"} className="font-semibold hover:border-b-2">
               Profile
             </Link>
             <Button
