@@ -1,15 +1,19 @@
 "use client";
 import { Button, toast } from "@heroui/react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import { useSession } from "@/lib/auth-client";
 
 export default function FounderAddStartup() {
   const [preview, setPreview] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [message, setMessage] = useState("Submit Form");
+  const { data: session } = useSession();
+  const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
 
   const {
     register,
@@ -17,7 +21,11 @@ export default function FounderAddStartup() {
     watch,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    defaultValues: {
+      founder_email: session?.user?.email || "",
+    },
+  });
   const imageFile = watch("image");
   const handleImageUpload = async () => {
     try {
@@ -58,14 +66,52 @@ export default function FounderAddStartup() {
       return () => URL.revokeObjectURL(url);
     }
   }, [imageFile]);
+
+  useEffect(() => {
+    if (session?.user?.email) {
+      reset({
+        founder_email: session.user.email,
+      });
+    }
+  }, [session]);
+
   const handleOnSubmit = async (formData) => {
-    console.log(formData);
-    console.log(imageUrl);
+    try {
+      if (!imageUrl) {
+        toast.danger("Please upload am image first!");
+      } else {
+        const startupFormData = {
+          startup_name: formData.startup_name,
+          industry: formData.industry,
+          founding_stage: formData.founding_stage,
+          founder_email: formData.founder_email,
+          imageUrl: imageUrl,
+          description: formData.description,
+        };
+        setMessage("Submitting Form...");
+        const response = await axios.post(
+          `${baseURL}/api/founder/add_startup`,
+          startupFormData,
+        );
+        const data = response.data;
+        if (data.success) {
+          toast.success(data.message);
+          setMessage("Submit Form");
+        } else {
+          toast.danger(data.message);
+          setMessage("Submit Form");
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+      setMessage("Submit Form");
+    }
+    reset();
   };
   return (
-    <div className="h-full flex flex-col justify-center items-center gap-4">
+    <div className="h-full flex flex-col justify-center items-center gap-2">
       {/* Wrapper */}
-      <div className="text-center flex flex-col gap-2">
+      <div className="text-center flex flex-col gap-1">
         <h1 className="font-bold text-2xl">Add Your Startup</h1>
         <p>
           Share your startup idea, vision, and details to connect
@@ -149,6 +195,7 @@ export default function FounderAddStartup() {
                     message: "Invalid email address",
                   },
                 })}
+                disabled={true}
                 className={`bg-gray-200 px-2 py-1 rounded-sm outline-orange-500 w-full border ${errors.founder_email && `border-red-500`}`}
                 id="founderEmail"
                 placeholder="Enter founder email"
@@ -234,15 +281,14 @@ export default function FounderAddStartup() {
                 placeholder="Enter description here..."
               ></textarea>
             </div>
-            {
-              errors.description
-              &&
+            {errors.description && (
               <p className="text-red-500">{errors.description.message}</p>
-            }
+            )}
           </div>
           <div className="flex flex-col gap-1">
             <Button
               variant="outline"
+              onClick={() => reset()}
               className="w-full rounded-sm bg-orange-500 font-bold text-white shadow-sm shadow-orange-500 hover:bg-orange-700 border-none"
             >
               Reset Form
@@ -252,7 +298,7 @@ export default function FounderAddStartup() {
               className="w-full rounded-sm bg-orange-500 font-bold text-white shadow-sm shadow-orange-500 hover:bg-orange-700 border-none"
               type="submit"
             >
-              Submit Form
+              {message}
             </Button>
           </div>
         </form>

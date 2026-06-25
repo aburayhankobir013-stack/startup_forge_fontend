@@ -1,8 +1,9 @@
+import FounderAddOpportunity from "@/components/founderAddOpportunity/FounderAddOpportunity";
 
 
 
 export default function FounderAddOpprotunityPage () {
   return (
-    <h1>I founder add opprotunity page!</h1>
+    <FounderAddOpportunity />
   );
 }
