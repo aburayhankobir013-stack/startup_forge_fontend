@@ -1,6 +1,6 @@
 "use client";
 import { GrOverview } from "react-icons/gr";
-import { MdManageAccounts } from "react-icons/md";
+import { MdAddBox, MdManageAccounts } from "react-icons/md";
 import { FaRocket } from "react-icons/fa";
 import { FaExchangeAlt } from "react-icons/fa";
 import { FaBriefcase } from "react-icons/fa";
@@ -59,6 +59,16 @@ export default function DashboardSidebarDesktop() {
         icon: FaRocket,
         label: "My Startup",
         href: "/dashboard/founder/my_startup",
+      },
+      {
+        icon: MdAddBox,
+        label: "Add Startup",
+        href: "/dashboard/founder/add_startup",
+      },
+      {
+        icon: FaRocket,
+        label: "Manage Startup",
+        href: "/dashboard/founder/manage_startup",
       },
       {
         icon: FaBriefcase,

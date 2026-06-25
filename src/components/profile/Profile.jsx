@@ -9,7 +9,7 @@ export default async function Profile() {
   return (
     <div className="h-screen bg-linear-to-l from-orange-200 via-orange-100 to-orange-5 flex flex-col justify-center items-center">
       {/* Wrapper */}
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-5 p-2">
         {/* Main container */}
         <div className="text-center flex flex-col gap-3">
           {/* Heading and Sub heading */}
