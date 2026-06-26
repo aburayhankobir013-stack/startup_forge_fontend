@@ -1,8 +1,9 @@
+import FounderMyStartup from "@/components/founderMyStartup/FounderMyStartup";
 
 
 
 export default function FounderMyStartupPage () {
   return (
-    <h1>I am founder my startup page!</h1>
+    <FounderMyStartup />
   );
 }
