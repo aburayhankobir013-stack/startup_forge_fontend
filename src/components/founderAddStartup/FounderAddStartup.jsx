@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { useSession } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 export default function FounderAddStartup() {
   const [preview, setPreview] = useState(null);
@@ -14,6 +15,7 @@ export default function FounderAddStartup() {
   const [message, setMessage] = useState("Submit Form");
   const { data: session } = useSession();
   const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+  const router = useRouter();
 
   const {
     register,
@@ -97,6 +99,7 @@ export default function FounderAddStartup() {
         if (data.success) {
           toast.success(data.message);
           setMessage("Submit Form");
+          router.push("/dashboard/founder/my_startup");
         } else {
           toast.danger(data.message);
           setMessage("Submit Form");

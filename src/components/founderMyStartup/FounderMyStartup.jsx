@@ -12,6 +12,13 @@ export default async function FounderMyStartup() {
     const response = await axios.get(
       `${baseURL}/api/founder/my_startup?founder_email=${email}`,
     );
+    if (!response.data.data) {
+      return (
+        <div className="h-full flex flex-col justify-center items-center">
+        <h1 className="font-bold text-red-500 text-xl">Start Not Created!</h1>
+      </div>
+      );
+    }
     const data = response.data;
       const {
         _id,
@@ -24,7 +31,7 @@ export default async function FounderMyStartup() {
         status,
         createdAt,
       } = data.data;
-      
+
   const dateFormate = (createdAt) => {
     const date = new Date(createdAt);
     const mm = String(date.getMonth()+1).padStart(2,"0");
