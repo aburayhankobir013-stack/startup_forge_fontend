@@ -4,7 +4,6 @@ import FounderManageOpportunityCard from "./FounderManageOpportunityCard";
 
 export default function FounderManageOpportunities ({opportunityData}) {
   const { relatedStartup } = opportunityData;
-  console.log(relatedStartup);
   const { opportunities } = opportunityData;
   return (
     <div className="h-full p-4 overflow-y-auto">

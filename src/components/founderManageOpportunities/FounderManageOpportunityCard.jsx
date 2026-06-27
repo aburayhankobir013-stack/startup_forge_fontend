@@ -1,7 +1,16 @@
+"use client";
 import { Avatar, Button } from "@heroui/react";
+import {useOverlayState} from "@heroui/react";
+import DeleteFounderOpportunity from "./DeleteFounderOpportunity";
+import EditFounderOpportunity from "./EditFounderOpportunity";
 
 export default function FounderManageOpportunityCard({relatedStartup, opportunity}) {
-  console.log(opportunity);
+  const deleteState = useOverlayState({
+    defaultOpen: false,
+  });
+  const updateState = useOverlayState({
+    defaultOpen: false,
+  });
   const { startup_name, imageUrl, industry } = relatedStartup;
   const getRemainingDays = (futureDate) => {
     const today = new Date();
@@ -55,9 +64,11 @@ export default function FounderManageOpportunityCard({relatedStartup, opportunit
         <div className="bg-orange-500 px-2 py-1 rounded-sm font-semibold text-center text-white">Remaining days: {getRemainingDays(opportunity.deadline)}</div>
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="outline" className="rounded-sm bg-red-500 text-white border-none w-full hover:bg-red-700" >Delete</Button>
-        <Button variant="outline" className="rounded-sm bg-black hover:bg-white hover:text-black text-white w-full border-none">Edit</Button>
+        <Button onPress={deleteState.open} variant="outline" className="rounded-sm bg-red-500 text-white border-none w-full hover:bg-red-700" >Delete</Button>
+        <Button onPress = {updateState.open} variant="outline" className="rounded-sm bg-black hover:bg-white hover:text-black text-white w-full border-none">Edit</Button>
       </div>
+      <DeleteFounderOpportunity deleteState = {deleteState} data = {{ role_title: opportunity.role_title, _id: opportunity._id}}/>
+      <EditFounderOpportunity updateState = {updateState} opportunity = {opportunity}/>
     </div>
   );
 }

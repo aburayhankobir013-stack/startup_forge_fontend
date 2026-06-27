@@ -1,0 +1,257 @@
+"use client";
+import { Modal } from "@heroui/react";
+import { Button, toast } from "@heroui/react";
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useSession } from "@/lib/auth-client";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function EditFounderOpportunity({ updateState, opportunity }) {
+  const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+  const { data: session } = useSession();
+  const [message, setMessage] = useState("Update Form");
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const handleOnSubmit = async (formData) => {
+    try {
+      const skills = formData.required_skills
+        .split(",")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      const opportunityData = [
+        {
+          founder_email: session?.user?.email,
+        },
+        {
+          ...formData,
+          required_skills: skills,
+        },
+      ];
+      
+      setMessage("Updating form...");
+      const response = await axios.put(`${baseURL}/api/founder/update_opportunity/${opportunity._id}`, opportunityData);
+      const data = response.data;
+      if (data.success) {
+        toast.success(data.message);
+        router.push("/dashboard/founder/manage_opportunities");
+        updateState.setOpen(false);
+        setMessage("Update Form");
+      } else {
+        toast.danger(data.message);
+        setMessage("Update Form");
+      }
+    } catch (error) {
+      console.error(error.message);
+      setMessage("Update Form");
+    }
+  };
+  useEffect(() => {
+  if (opportunity) {
+    reset({
+      role_title: opportunity.role_title || "",
+      required_skills: opportunity.required_skills?.join(", ") || "",
+      work_type: opportunity.work_type || "",
+      commitment_levels: opportunity.commitment_levels || "",
+      deadline: opportunity.deadline
+        ? opportunity.deadline.split("T")[0]
+        : "",
+    });
+  }
+}, [opportunity, reset]);
+  return (
+    <Modal isOpen={updateState.isOpen} onOpenChange={updateState.setOpen}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog className="rounded-sm bg-linear-to-l from-orange-200 via-orange-100 to-orange-50 p-2">
+            <Modal.CloseTrigger className="bg-green-300 text-green-950" />
+            <Modal.Body className="flex flex-col gap-2 items-center">
+              <div className="h-full flex flex-col justify-center items-center p-2">
+                {/* Warpper */}
+                <div className="flex flex-col gap-2">
+                  {/* Main container */}
+                  <div className="flex flex-col items-center text-center">
+                    <h1 className="text-2xl font-bold">
+                      Update Opportunity Details
+                    </h1>
+                    <p>
+                      Make changes to your opportunity so the right <br /> candidates see the latest information.
+                    </p>
+                  </div>
+                  <form
+                    onSubmit={handleSubmit(handleOnSubmit)}
+                    className="p-4 flex flex-col gap-2 bg-orange-300 rounded-sm shadow-sm shadow-orange-500 w-full xs:max-w-sm"
+                  >
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1">
+                        <label htmlFor="role_title" className="font-semibold">
+                          Role title
+                        </label>
+                        <input
+                          type="text"
+                          id="role_title"
+                          {...register("role_title", {
+                            required: "Role title is required!",
+                          })}
+                          placeholder="Enter role title"
+                          className={`bg-gray-200 border px-2 py-1 rounded-sm outline-orange-500 ${errors.role_title && `border-red-500`}`}
+                        />
+                      </div>
+                      {errors.role_title && (
+                        <p className="text-red-500">
+                          {errors.role_title.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1">
+                        <label
+                          htmlFor="required_skills"
+                          className="font-semibold"
+                        >
+                          Required skills
+                        </label>
+                        <input
+                          type="text"
+                          {...register("required_skills", {
+                            required: "At least one skill is required!",
+                            validate: (value) => {
+                              if (!value || value.trim() === "") {
+                                return "At least one skill is required!";
+                              }
+                              const skills = value
+                                .split(",")
+                                .map((s) => s.trim())
+                                .filter(Boolean);
+                              if (skills.length < 1) {
+                                return "Please add at least one skill!";
+                              }
+                              return true;
+                            },
+                          })}
+                          id="required_skills"
+                          placeholder="Enter skills with comma separated"
+                          className={`bg-gray-200 rounded-sm px-2 py-1 border outline-orange-500 ${errors.required_skills && `border-red-500`}`}
+                        />
+                      </div>
+                      {errors.required_skills && (
+                        <p className="text-red-500">
+                          {errors.required_skills.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1">
+                        <label htmlFor="work_type" className="font-semibold">
+                          Work types
+                        </label>
+                        <select
+                          {...register("work_type", {
+                            required: "Work type is required!",
+                          })}
+                          id="work_type"
+                          className={`bg-gray-200 px-2 py-1 border rounded-sm outline-orange-500 ${errors.work_type && `border-red-500`}`}
+                        >
+                          <option value="">Select work type</option>
+                          <option value="remote">Remote</option>
+                          <option value="on-site">On-site</option>
+                          <option value="hybrid">Hybrid</option>
+                        </select>
+                      </div>
+                      {errors.work_type && (
+                        <p className="text-red-500">
+                          {errors.work_type.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1">
+                        <label
+                          htmlFor="commitment_levels"
+                          className="font-semibold"
+                        >
+                          Commitment levels
+                        </label>
+                        <select
+                          {...register("commitment_levels", {
+                            required: "Commitment level is required!",
+                          })}
+                          id="commitment_levels"
+                          className={`bg-gray-200 px-2 py-1 rounded-sm outline-orange-500 border ${errors.commitment_levels && `border-red-500`}`}
+                        >
+                          <option value="">Select commitment level</option>
+                          <option value="full-time">Full-time</option>
+                          <option value="part-time">Part-time</option>
+                          <option value="flexible">Flexible</option>
+                        </select>
+                      </div>
+                      {errors.commitment_levels && (
+                        <p className="text-red-500">
+                          {errors.commitment_levels.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <div className="flex flex-col gap-1">
+                        <label htmlFor="deadline" className="font-semibold">
+                          Deadline
+                        </label>
+                        <input
+                          type="date"
+                          id="deadline"
+                          {...register("deadline", {
+                            required: "Deadline is required!",
+                            validate: (value) => {
+                              if (!value) {
+                                return "Deadline is required!";
+                              }
+                              const selectedDate = new Date(value);
+                              selectedDate.setHours(0, 0, 0, 0);
+                              const today = new Date();
+                              today.setHours(0, 0, 0, 0);
+                              if (selectedDate <= today) {
+                                return "Deadline must be a future date!";
+                              }
+                              return true;
+                            },
+                          })}
+                          className={`px-2 py-1 bg-gray-200 rounded-sm uppercase border ${errors.deadline && `border-red-500`}`}
+                        />
+                      </div>
+                      {errors.deadline && (
+                        <p className="text-red-500">
+                          {errors.deadline.message}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col gap-1">
+                      <Button
+                        variant="outline"
+                        onClick={() => reset()}
+                        className="w-full rounded-sm bg-orange-500 font-bold text-white shadow-sm shadow-orange-500 border-none hover:bg-orange-700"
+                      >
+                        Reset Form
+                      </Button>
+                      <Button
+                        variant="outline"
+                        type="submit"
+                        className="w-full rounded-sm bg-orange-500 font-bold text-white shadow-sm shadow-orange-500 border-none hover:bg-orange-700"
+                      >
+                        {message}
+                      </Button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </Modal.Body>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
+    </Modal>
+  );
+}

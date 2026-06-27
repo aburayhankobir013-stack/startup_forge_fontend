@@ -4,11 +4,13 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useSession } from "@/lib/auth-client";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function FounderAddOpportunity() {
   const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
   const { data: session } = useSession();
   const [message, setMessage] = useState("Submit Form");
+  const router = useRouter();
 
   const {
     register,
@@ -39,6 +41,7 @@ export default function FounderAddOpportunity() {
       const data = response.data;
       if (data.success) {
         toast.success(data.message);
+        router.push("/dashboard/founder/manage_opportunities");
         setMessage("Submit Form");
       } else {
         toast.danger(data.message);
@@ -205,7 +208,7 @@ export default function FounderAddOpportunity() {
               type="submit"
               className="w-full rounded-sm bg-orange-500 font-bold text-white shadow-sm shadow-orange-500 border-none hover:bg-orange-700"
             >
-              Submit Form
+              {message}
             </Button>
           </div>
         </form>
