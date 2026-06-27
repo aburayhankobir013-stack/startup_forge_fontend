@@ -2,9 +2,13 @@
 import { Avatar, Button } from "@heroui/react";
 import {useOverlayState} from "@heroui/react";
 import DeleteFounderStartup from "./DeleteFounderStartup";
+import EditFounderStartup from "./EditFounderStartup";
 
 export default function FounderManageStartup({ email, data }) {
   const deleteState = useOverlayState({
+    defaultOpen: false,
+  });
+  const updateState = useOverlayState({
     defaultOpen: false,
   });
   const {
@@ -71,6 +75,7 @@ export default function FounderManageStartup({ email, data }) {
             Delete
           </Button>
           <Button
+          onPress={updateState.open}
             variant="outline"
             className="rounded-sm bg-black border-none text-white hover:bg-white hover:text-black w-full"
           >
@@ -79,6 +84,7 @@ export default function FounderManageStartup({ email, data }) {
         </div>
       </div>
       <DeleteFounderStartup deleteState = {deleteState} details = {{_id, imageUrl, startup_name}} />
+      <EditFounderStartup updateState = {updateState} data = {data} />
     </div>
   );
 }

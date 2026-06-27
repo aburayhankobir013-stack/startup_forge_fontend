@@ -1,7 +1,7 @@
 "use client";
 import { Button, toast } from "@heroui/react";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { useSession } from "@/lib/auth-client";
