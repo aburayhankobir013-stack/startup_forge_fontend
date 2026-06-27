@@ -1,8 +1,14 @@
+import FounderManageOpportunities from "@/components/founderManageOpportunities/FounderManageOpportunities";
+import axios from "axios";
 
 
 
-export default function FounderManageOpportunitiesPage () {
+
+export default async function FounderManageOpportunitiesPage () {
+  const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+
+  const response = await axios.get(`${baseURL}/api/founder/manage_opportunities`);
   return (
-    <h1>I am founder manage Opportunities page!</h1>
+    <FounderManageOpportunities opportunityData = {response.data.data}/>
   );
 }

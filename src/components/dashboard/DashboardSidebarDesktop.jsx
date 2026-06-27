@@ -129,7 +129,7 @@ export default function DashboardSidebarDesktop() {
             />
             <Avatar.Fallback>{session?.user?.name.charAt(0)}</Avatar.Fallback>
           </Avatar>
-          {isOpenDropdown || (
+          {isOpenDropdown && (
             <div className="w-fit rounded-sm p-1 bg-orange-200 shadow-sm shadow-orange-300 absolute left-1/6 bottom-full text-center z-10">
               <div className="bg-gray-100 rounded-sm flex flex-col gap-2 items-center py-2 px-20">
                 <h1 className="font-semibold">
