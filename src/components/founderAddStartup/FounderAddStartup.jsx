@@ -72,7 +72,7 @@ export default function FounderAddStartup() {
   useEffect(() => {
     if (session?.user?.email) {
       reset({
-        founder_email: session.user.email,
+        founder_email: session?.user?.email,
       });
     }
   }, [session]);
@@ -92,7 +92,7 @@ export default function FounderAddStartup() {
         };
         setMessage("Submitting Form...");
         const response = await axios.post(
-          `${baseURL}/api/founder/add_startup`,
+          `${baseURL}/api/founder/add_startup?founder_email=${session?.user?.email}`,
           startupFormData,
         );
         const data = response.data;

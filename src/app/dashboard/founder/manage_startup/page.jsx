@@ -18,7 +18,7 @@ export default async function FounderManageStartupPage () {
   if (!response.data.data)  {
     return (
       <div className="h-full flex flex-col justify-center items-center">
-        <h1 className="font-bold text-red-500 text-xl">Start Not Created!</h1>
+        <h1 className="font-bold text-red-500 text-xl">Startup Not Created!</h1>
       </div>
     );
   }
