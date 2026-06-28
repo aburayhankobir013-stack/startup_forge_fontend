@@ -1,5 +1,6 @@
 import Banner from "@/components/banner/Banner";
 import CTACard from "@/components/ctaCard/CTACard";
+import FeaturedOpportunities from "@/components/featuredOpportunities/FeaturedOpportunities";
 import FeaturedStartups from "@/components/featuredStartups/FeaturedStartups";
 import LiveMessage from "@/components/liveMessage/LiveMessage";
 import StartupSttistics from "@/components/startupStatistics/StartupStatistics";
@@ -11,6 +12,7 @@ export default function HomePage() {
     <LiveMessage />
       <Banner />
       <FeaturedStartups />
+      <FeaturedOpportunities />
       <WhyJoinStartupForge />
       <StartupSttistics />
       <CTACard />

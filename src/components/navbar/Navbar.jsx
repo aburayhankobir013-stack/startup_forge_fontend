@@ -37,7 +37,7 @@ export default function Navbar() {
         </div>
         <div className="flex items-center gap-3">
           <NavLink href={"/"}>Home</NavLink>
-          <NavLink href={"startups"}>Browse startups</NavLink>
+          <NavLink href={"/startups"}>Browse startups</NavLink>
           <NavLink href={"/opportunities"}>Browse opportunities</NavLink>
           {
             !session?.user

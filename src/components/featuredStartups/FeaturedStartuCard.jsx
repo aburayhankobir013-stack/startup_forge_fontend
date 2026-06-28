@@ -45,7 +45,7 @@ export default function FeaturedStartupCard({ startup }) {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="bg-orange-500 px-2 py-1 rounded-sm font-semibold text-white">
+        <div className="bg-orange-500 px-2 py-1 rounded-sm font-semibold text-white text-center">
           Created at: {dateFormate(createdAt)}
         </div>
         <Button variant="outline" className="bg-orange-500 rounded-sm border-none font-bold text-white w-full shadow-sm shadow-orange-500 hover:bg-orange-700">
