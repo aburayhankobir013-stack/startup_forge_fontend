@@ -64,7 +64,7 @@ export default function OpportunityCard({ opportunity }) {
         </div>
       </div>
       <Button variant="outline" className="w-full rounded-sm bg-orange-500 border-none shadow-sm shadow-orange-500 hover:bg-orange-700">
-        <Link href={"#"} className="font-bold text-white">
+        <Link href={`/opportunity/${_id}`} className="font-bold text-white">
           View details
         </Link>
       </Button>
