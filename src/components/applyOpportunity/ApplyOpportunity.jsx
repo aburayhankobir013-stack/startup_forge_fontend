@@ -136,7 +136,7 @@ export default function ApplyOpportunity({ applyState, opportunity, session}) {
                       type="submit"
                       className="rounded-sm w-full border-none bg-orange-500 shadow-sm shadow-orange-500 hover:bg-orange-700 text-white font-bold"
                     >
-                      Apply
+                      {message}
                     </Button>
                   </div>
                 </form>
