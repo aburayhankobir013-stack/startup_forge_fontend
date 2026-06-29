@@ -1,6 +1,11 @@
-import { Avatar, Button } from "@heroui/react";
+"use client";
+import { Avatar, Button, useOverlayState } from "@heroui/react";
+import ApplyOpportunity from "../applyOpportunity/ApplyOpportunity";
 
 export default function OpportunityDetails({ opportunity, session }) {
+  const applyState = useOverlayState({
+      defaultOpen: false,
+    });
   const {
     _id,
     deadline,
@@ -80,6 +85,7 @@ export default function OpportunityDetails({ opportunity, session }) {
             </div>
             {session?.user?.role === "collaborator" && (
               <Button
+                onPress={applyState.open}
                 variant="outline"
                 className="w-full rounded-sm font-bold text-white bg-orange-500 border-none shadow-sm shadow-orange-500 hover:bg-orange-700"
               >
@@ -89,6 +95,7 @@ export default function OpportunityDetails({ opportunity, session }) {
           </div>
         </div>
       </div>
+      <ApplyOpportunity applyState={applyState} opportunity = {opportunity} session = {session} />
     </div>
   );
 }
