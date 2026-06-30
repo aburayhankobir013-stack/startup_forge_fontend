@@ -85,7 +85,7 @@ export default function Navbar() {
               <span className="text-xl">{session?.user?.name}</span>
             </h1>
             <p className="italic text-xs">{session?.user?.email}</p>
-            <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
+            <Link href={`/dashboard/${role}/overview`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
             <Link href={"/profile"} className="font-semibold hover:border-b-2">
@@ -165,7 +165,7 @@ export default function Navbar() {
               <span className="text-xl">{session?.user?.name}</span>
             </h1>
             <p className="italic text-xs">{session?.user?.email}</p>
-            <Link href={`/dashboard/${role}`} className="font-semibold hover:border-b-2">
+            <Link href={`/dashboard/${role}/overview`} className="font-semibold hover:border-b-2">
               Dashboard
             </Link>
             <Link href={"/profile"} className="font-semibold hover:border-b-2">
