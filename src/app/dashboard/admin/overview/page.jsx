@@ -1,10 +1,13 @@
+import AdminOverview from "@/components/adminOverview/AdminOverview";
+import axios from "axios";
 
 
 
-export default function AdminOverviewPage() {
+export default async function AdminOverviewPage() {
+  const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+  const response = await axios.get(`${baseURL}/api/admin/overview`);
+  const overview = response.data.data;
   return (
-    <h1>
-      I am admin overview page!
-    </h1>
+    <AdminOverview overview = {overview} />
   );
 }
