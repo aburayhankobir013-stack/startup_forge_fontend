@@ -1,7 +1,11 @@
 "use client";
-import { Button, Table } from "@heroui/react";
+import { Button, Table, toast } from "@heroui/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function FounderAllApplications({ applications }) {
+  const router = useRouter();
+  const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
   const dateFormate = (createdAt) => {
     const date = new Date(createdAt);
     const mm = String(date.getMonth() + 1).padStart(2, "0");
@@ -10,11 +14,42 @@ export default function FounderAllApplications({ applications }) {
     const formatted = `${mm}-${dd}-${yy}`;
     return formatted;
   };
-  const handleAccept = async () => {
-    
-  }
-  const handleReject = async () => {
-
+  const handleAccept = async (applicationId) => {
+    const response = await axios.patch(
+      `${baseURL}/api/founder/update_application/${applicationId}`,
+      {
+        status: "accepted",
+      },
+    );
+    if (response.data.success) {
+      toast.success(response.data.message);
+      router.push("/dashboard/founder/applications");
+    } else {
+      toast.danger(response.data.message);
+    }
+  };
+  const handleReject = async (applicationId) => {
+    const response = await axios.patch(
+      `${baseURL}/api/founder/update_application/${applicationId}`,
+      {
+        status: "rejected",
+      },
+    );
+    if (response.data.success) {
+      toast.success(response.data.message);
+      router.push("/dashboard/founder/applications");
+    } else {
+      toast.danger(response.data.message);
+    }
+  };
+  if (applications.length === 0) {
+    return (
+      <div className="h-full flex flex-col justify-center items-center">
+        <h1 className="text-xl font-bold text-red-500">
+          No Applications Found!
+        </h1>
+      </div>
+    );
   }
   return (
     <div className="h-full p-4">
@@ -58,11 +93,12 @@ export default function FounderAllApplications({ applications }) {
                     <Table.Cell>
                       {dateFormate(application.appliedAt)}
                     </Table.Cell>
-                    <Table.Cell>{application.status}</Table.Cell>
+                    <Table.Cell className="capitalize">{application.status}</Table.Cell>
                     <Table.Cell className="rounded-xs flex items-center gap-2">
                       {application.status === "pending" && (
                         <>
-                          <Button className="rounded-sm bg-green-500 hover:bg-green-700"
+                          <Button
+                            className="rounded-sm bg-green-500 hover:bg-green-700"
                             onClick={() =>
                               handleAccept(application.applicationId)
                             }
@@ -70,7 +106,8 @@ export default function FounderAllApplications({ applications }) {
                             Accept
                           </Button>
 
-                          <Button className="rounded-sm bg-red-500 hover:bg-red-700"
+                          <Button
+                            className="rounded-sm bg-red-500 hover:bg-red-700"
                             onClick={() =>
                               handleReject(application.applicationId)
                             }
@@ -81,7 +118,8 @@ export default function FounderAllApplications({ applications }) {
                       )}
 
                       {application.status === "accepted" && (
-                        <Button className="rounded-sm bg-red-500 hover:bg-red-700"
+                        <Button
+                          className="rounded-sm bg-red-500 hover:bg-red-700"
                           onClick={() =>
                             handleReject(application.applicationId)
                           }
@@ -91,7 +129,8 @@ export default function FounderAllApplications({ applications }) {
                       )}
 
                       {application.status === "rejected" && (
-                        <Button className="rounded-sm bg-green-500 hover:bg-green-700"
+                        <Button
+                          className="rounded-sm bg-green-500 hover:bg-green-700"
                           onClick={() =>
                             handleAccept(application.applicationId)
                           }
