@@ -1,8 +1,13 @@
+import AdminManageStartup from "@/components/adminManageStartup/AdminManageStartup";
+import axios from "axios";
 
 
 
-export default function AdminManageStartupsPage () {
+export default async function AdminManageStartupsPage () {
+  const baseURL = `${process.env.NEXT_PUBLIC_BACKEND_URL}`;
+  const response = await axios.get(`${baseURL}/api/admin/manage_startups`);
+  const startups = response.data.data;
   return (
-    <h1>I am admin manage startups page!</h1>
+    <AdminManageStartup startups = {startups} />
   );
 }

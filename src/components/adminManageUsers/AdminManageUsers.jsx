@@ -34,6 +34,15 @@ export default function AdminManageUsers({ users }) {
       toast.success(data.message);
     }
   }
+  if (users.length === 0) {
+    return (
+      <div className="h-full flex flex-col justify-center items-center">
+        <h1 className="text-xl font-bold text-red-500">
+          No Users Found!
+        </h1>
+      </div>
+    );
+  }
   return (
     <div className="h-full p-4">
       <Table className="rounded-none  px-2 py-0 bg-transparent">
